@@ -5,6 +5,7 @@ import PlansSection from "@/components/PlansSection";
 import TrainersSection from "@/components/TrainersSection";
 import ClassesSection from "@/components/ClassesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import NewsletterSection from "@/components/NewsletterSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
@@ -19,6 +20,7 @@ export default function Home() {
         <TrainersSection />
         <ClassesSection />
         <TestimonialsSection />
+        <NewsletterSection />
         <ContactSection />
       </main>
       <Footer />

@@ -19,6 +19,7 @@ export default function Header() {
     { label: "Professores", id: "trainers" },
     { label: "Aulas", id: "classes" },
     { label: "Depoimentos", id: "testimonials" },
+    { label: "Newsletter", id: "newsletter" },
     { label: "Contato", id: "contact" },
   ];
 
