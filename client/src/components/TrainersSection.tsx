@@ -23,22 +23,22 @@ export default function TrainersSection() {
 
   const trainers = [
     {
-      name: "Carlos Silva",
+      name: "Carlos Santos",
       specialty: "Hipertrofia",
-      image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663241647868/nKoDBegxXWcUWFrCoQrWiu/personal-trainer-professional-giHyzPsCpzymiz8AHn5KXU.webp",
-      bio: "Especialista em ganho de massa muscular com 8 anos de experiencia",
+      image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663241647868/nKoDBegxXWcUWFrCoQrWiu/trainer-carlos-santos-gne7YgGsUNtNk32rgB6A2B.webp",
+      bio: "Especialista em ganho de massa muscular com 12 anos de experiencia",
     },
     {
-      name: "Ana Costa",
+      name: "Ana Silva",
       specialty: "Emagrecimento",
-      image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663241647868/nKoDBegxXWcUWFrCoQrWiu/personal-trainer-professional-giHyzPsCpzymiz8AHn5KXU.webp",
+      image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663241647868/nKoDBegxXWcUWFrCoQrWiu/trainer-ana-silva-YTL6BADnSpM3gffoj6jp3J.webp",
       bio: "Especialista em transformacao fisica e perda de peso sustentavel",
     },
     {
-      name: "Roberto Dias",
-      specialty: "Funcional",
-      image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663241647868/nKoDBegxXWcUWFrCoQrWiu/personal-trainer-professional-giHyzPsCpzymiz8AHn5KXU.webp",
-      bio: "Treinador de mobilidade e funcionalidade com certificacao internacional",
+      name: "Marina Costa",
+      specialty: "Yoga & Pilates",
+      image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663241647868/nKoDBegxXWcUWFrCoQrWiu/trainer-marina-costa-FqUqimwmjnZnHeLjSqKxUY.webp",
+      bio: "Instrutora de mobilidade e flexibilidade com certificacao internacional",
     },
   ];
 

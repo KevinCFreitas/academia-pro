@@ -24,24 +24,24 @@ export default function TestimonialsSection() {
 
   const testimonials = [
     {
-      name: "Marina Silva",
+      name: "Jessica Oliveira",
       transformation: "Perdeu 12kg em 4 meses",
       text: "Comecei sem esperancas, mas o acompanhamento dos professores foi incrivel. Hoje me sinto muito melhor e mais confiante.",
-      image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663241647868/nKoDBegxXWcUWFrCoQrWiu/transformation-before-after-V2ipmygdBsJi2UP5mmZWGu.webp",
+      image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663241647868/nKoDBegxXWcUWFrCoQrWiu/testimonial-jessica-oliveira-QKht2Ddr7vWvydL9kdFca4.webp",
       rating: 5,
     },
     {
-      name: "Pedro Costa",
+      name: "Rafael Gomes",
       transformation: "Ganhou 8kg de musculo",
       text: "Melhor investimento que fiz. A Academia Pro tem tudo: equipamentos, profissionais e ambiente motivador.",
-      image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663241647868/nKoDBegxXWcUWFrCoQrWiu/transformation-before-after-V2ipmygdBsJi2UP5mmZWGu.webp",
+      image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663241647868/nKoDBegxXWcUWFrCoQrWiu/testimonial-rafael-gomes-5Xcq5faU9DnCNBwxpwcSBP.webp",
       rating: 5,
     },
     {
-      name: "Juliana Oliveira",
+      name: "Marina Silva",
       transformation: "Recuperou mobilidade",
       text: "Apos a cirurgia, pensei que nao conseguiria mais treinar. Os profissionais adaptaram tudo para mim.",
-      image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663241647868/nKoDBegxXWcUWFrCoQrWiu/transformation-before-after-V2ipmygdBsJi2UP5mmZWGu.webp",
+      image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663241647868/nKoDBegxXWcUWFrCoQrWiu/trainer-marina-costa-FqUqimwmjnZnHeLjSqKxUY.webp",
       rating: 5,
     },
   ];
