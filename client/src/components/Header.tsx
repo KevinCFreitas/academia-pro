@@ -50,8 +50,14 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden sm:block">
+          {/* CTA Buttons */}
+          <div className="hidden sm:flex items-center gap-3">
+            <a
+              href="/login"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
+            >
+              Entrar
+            </a>
             <a
               href="https://wa.me/5511999999999?text=Ola%20Academia%20Pro!%20Gostaria%20de%20saber%20mais%20sobre%20os%20planos."
               target="_blank"
@@ -85,6 +91,12 @@ export default function Header() {
                   {item.label}
                 </button>
               ))}
+              <a
+                href="/login"
+                className="px-4 py-3 text-left font-bold text-blue-600 bg-blue-50 border-b border-gray-100"
+              >
+                Entrar
+              </a>
               <a
                 href="https://wa.me/5511999999999?text=Ola%20Academia%20Pro!%20Gostaria%20de%20saber%20mais%20sobre%20os%20planos."
                 target="_blank"
