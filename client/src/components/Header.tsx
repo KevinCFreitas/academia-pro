@@ -1,10 +1,11 @@
-import { MessageCircle, Menu, X } from "lucide-react";
+﻿import { Dumbbell, Menu, MessageCircle, X } from "lucide-react";
 import { useState } from "react";
+import { navItems, whatsappLink } from "@/data/academyData";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const scrollToSection = (id: string) => {
+  const scrollToSection = (id: string): void => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
@@ -12,114 +13,115 @@ export default function Header() {
     }
   };
 
-  const navItems = [
-    { label: "Home", id: "home" },
-    { label: "Sobre", id: "about" },
-    { label: "Planos", id: "plans" },
-    { label: "Professores", id: "trainers" },
-    { label: "Aulas", id: "classes" },
-    { label: "Depoimentos", id: "testimonials" },
-    { label: "Newsletter", id: "newsletter" },
-    { label: "Contato", id: "contact" },
-  ];
+  const primaryCta = whatsappLink(
+    "Olá, Academia Pro! Gostaria de agendar uma aula experimental."
+  );
 
   return (
     <>
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 shadow-sm">
-        <div className="container flex items-center justify-between h-20">
-          {/* Logo */}
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center font-bold text-black">
-              💪
+      <header className="fixed top-0 left-0 right-0 z-50 border-b border-[#E4E4E0]/80 bg-[#F6F6F4]/90 backdrop-blur-md">
+        <div className="container flex h-20 items-center justify-between">
+          <button
+            type="button"
+            onClick={() => scrollToSection("home")}
+            className="flex items-center gap-3 text-left"
+            aria-label="Ir para o início"
+          >
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#A3E635] text-[#0E1012] shadow-sm">
+              <Dumbbell size={20} strokeWidth={2.5} />
             </div>
-            <span className="font-bold text-xl text-black hidden sm:inline">Academia Pro</span>
-          </div>
+            <span className="font-display text-lg font-bold tracking-tight text-[#0E1012]">
+              Academia Pro
+            </span>
+          </button>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden items-center gap-1 lg:flex">
             {navItems.map((item) => (
               <button
                 key={item.id}
+                type="button"
                 onClick={() => scrollToSection(item.id)}
-                className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-yellow-500 transition-colors duration-300 relative group"
+                className="group relative px-4 py-2 text-sm font-medium text-[#3F4652] transition-colors hover:text-[#0E1012]"
               >
                 {item.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 group-hover:w-full transition-all duration-300" />
+                <span className="absolute bottom-0 left-4 right-4 h-0.5 origin-left scale-x-0 bg-[#A3E635] transition-transform duration-300 group-hover:scale-x-100" />
               </button>
             ))}
           </nav>
 
-          {/* CTA Buttons */}
-          <div className="hidden sm:flex items-center gap-3">
+          <div className="hidden items-center gap-3 md:flex">
             <a
               href="/login"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
+              className="inline-flex items-center rounded-full border border-[#D7D9D2] bg-white px-4 py-2 text-sm font-semibold text-[#0E1012] transition-all hover:border-[#A3E635] hover:bg-[#F6F6F4]"
             >
-              Entrar
+              Área do Aluno
             </a>
             <a
-              href="https://wa.me/5511999999999?text=Ola%20Academia%20Pro!%20Gostaria%20de%20saber%20mais%20sobre%20os%20planos."
+              href={primaryCta}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-400 text-black font-bold rounded-lg hover:bg-yellow-500 transition-all duration-300 transform hover:scale-105"
+              className="inline-flex items-center gap-2 rounded-full bg-[#A3E635] px-4 py-2 text-sm font-bold text-[#0E1012] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#84CC16] hover:shadow-md"
             >
-              <MessageCircle size={18} />
-              WhatsApp
+              <MessageCircle size={16} />
+              Agendar Aula
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            type="button"
+            onClick={() => setIsMenuOpen((open) => !open)}
+            className="inline-flex rounded-lg p-2 text-[#0E1012] transition-colors hover:bg-white md:hidden"
+            aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={isMenuOpen}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
-        {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-200 animate-fadeInUp">
-            <nav className="flex flex-col">
+          <div className="border-t border-[#E4E4E0] bg-[#F6F6F4] md:hidden animate-fadeInUp">
+            <nav className="container flex flex-col py-3">
               {navItems.map((item) => (
                 <button
                   key={item.id}
+                  type="button"
                   onClick={() => scrollToSection(item.id)}
-                  className="px-4 py-3 text-left font-medium text-gray-700 hover:bg-gray-50 hover:text-yellow-500 transition-colors border-b border-gray-100"
+                  className="rounded-lg px-3 py-3 text-left text-sm font-medium text-[#3F4652] transition-colors hover:bg-white hover:text-[#0E1012]"
                 >
                   {item.label}
                 </button>
               ))}
-              <a
-                href="/login"
-                className="px-4 py-3 text-left font-bold text-blue-600 bg-blue-50 border-b border-gray-100"
-              >
-                Entrar
-              </a>
-              <a
-                href="https://wa.me/5511999999999?text=Ola%20Academia%20Pro!%20Gostaria%20de%20saber%20mais%20sobre%20os%20planos."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-3 text-left font-bold text-yellow-500 bg-yellow-50 flex items-center gap-2"
-              >
-                <MessageCircle size={18} />
-                WhatsApp
-              </a>
+              <div className="mt-3 flex flex-col gap-2 border-t border-[#E4E4E0] pt-3">
+                <a
+                  href="/login"
+                  className="rounded-lg border border-[#D7D9D2] bg-white px-4 py-3 text-center text-sm font-semibold text-[#0E1012]"
+                >
+                  Área do Aluno / Entrar
+                </a>
+                <a
+                  href={primaryCta}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#A3E635] px-4 py-3 text-sm font-bold text-[#0E1012]"
+                >
+                  <MessageCircle size={16} />
+                  Agendar Aula Experimental
+                </a>
+              </div>
             </nav>
           </div>
         )}
       </header>
 
-      {/* Floating WhatsApp Button */}
       <a
-        href="https://wa.me/5511999999999?text=Ola%20Academia%20Pro!%20Gostaria%20de%20saber%20mais%20sobre%20os%20planos."
+        href={whatsappLink("Olá, Academia Pro! Gostaria de saber mais sobre os planos.")}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-40 w-14 h-14 bg-yellow-400 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 animate-fadeInUp animate-pulse-yellow"
+        className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#A3E635] text-[#0E1012] shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl animate-fadeInUp animate-pulse-accent"
         style={{ animationDelay: "0.3s" }}
+        aria-label="Falar no WhatsApp"
       >
-        <MessageCircle size={28} className="text-black" />
+        <MessageCircle size={26} />
       </a>
     </>
   );

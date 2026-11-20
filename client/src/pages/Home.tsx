@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+﻿import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import PlansSection from "@/components/PlansSection";
@@ -11,14 +11,14 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F6F6F4] text-[#0E1012]">
       <Header />
       <main className="pt-20">
         <HeroSection />
         <AboutSection />
+        <ClassesSection />
         <PlansSection />
         <TrainersSection />
-        <ClassesSection />
         <TestimonialsSection />
         <NewsletterSection />
         <ContactSection />

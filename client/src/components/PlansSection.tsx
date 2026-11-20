@@ -1,198 +1,121 @@
-import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useRef, useState } from "react";
 import { Check } from "lucide-react";
+import EnrollmentModal from "@/components/EnrollmentModal";
+import { plans, type Plan } from "@/data/academyData";
 
 export default function PlansSection() {
   const [isVisible, setIsVisible] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        if (entry.isIntersecting) setIsVisible(true);
       },
-      { threshold: 0.1 }
+      { threshold: 0.15 }
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
-  const plans = [
-    {
-      name: "Mensal",
-      price: "R$ 99",
-      period: "/mês",
-      description: "Perfeito para começar",
-      features: [
-        "Acesso à academia",
-        "Equipamentos completos",
-        "Aulas em grupo",
-        "Suporte básico",
-      ],
-      highlighted: false,
-    },
-    {
-      name: "Trimestral",
-      price: "R$ 249",
-      period: "/3 meses",
-      description: "Mais escolhido",
-      features: [
-        "Tudo do plano mensal",
-        "1 sessão com personal",
-        "Avaliação física",
-        "Suporte prioritário",
-        "Desconto em produtos",
-      ],
-      highlighted: true,
-    },
-    {
-      name: "Anual",
-      price: "R$ 799",
-      period: "/ano",
-      description: "Melhor economia",
-      features: [
-        "Tudo do plano trimestral",
-        "4 sessões com personal",
-        "Planejamento nutricional",
-        "Acompanhamento mensal",
-        "Acesso VIP a eventos",
-      ],
-      highlighted: false,
-    },
-  ];
-
   return (
     <section
-      id="plans"
+      id="planos"
       ref={sectionRef}
-      className="py-20 bg-white relative overflow-hidden"
+      className="relative overflow-hidden bg-[#F6F6F4] py-24"
     >
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-400 rounded-full opacity-5 blur-3xl" />
-
+      <div className="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-[#A3E635]/10 blur-3xl" />
       <div className="container relative z-10">
-        {/* Header */}
         <div
-          className={`text-center mb-16 transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          className={`mb-14 text-center transition-all duration-700 ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
           }`}
         >
-          <span className="text-yellow-500 font-bold text-sm uppercase tracking-wider">
-            Planos
+          <span className="text-sm font-bold uppercase tracking-[0.18em] text-[#65A30D]">
+            Planos e Matrícula
           </span>
-          <h2 className="text-4xl lg:text-5xl font-bold text-black mt-2">
+          <h2 className="mt-3 font-display text-4xl font-extrabold text-[#0E1012] lg:text-5xl">
             Escolha o plano ideal para você
           </h2>
-          <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
-            Todos os planos incluem acesso completo à academia e suporte profissional
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-[#5B616E]">
+            Planos claros, comparáveis e pensados para diferentes fases da sua jornada de treino.
           </p>
         </div>
 
-        {/* Plans Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 items-stretch gap-6 md:grid-cols-3">
           {plans.map((plan, index) => (
-            <div
-              key={index}
-              className={`transition-all duration-700 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-              }`}
-              style={{
-                transitionDelay: `${100 + index * 100}ms`,
-              }}
+            <article
+              key={plan.id}
+              className={`relative flex h-full flex-col rounded-3xl border p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl ${
+                plan.highlighted
+                  ? "border-[#A3E635] bg-[#0E1012] text-[#F8FAFC] shadow-xl shadow-[#0E1012]/20 md:-translate-y-2"
+                  : "border-[#E4E4E0] bg-white text-[#0E1012] shadow-sm"
+              } ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
+              style={{ transitionDelay: `${100 + index * 100}ms` }}
             >
-              <div
-                className={`relative h-full rounded-2xl transition-all duration-500 ${
-                  plan.highlighted
-                    ? "bg-gradient-to-br from-yellow-400 to-yellow-500 shadow-2xl scale-105 md:scale-110 hover:shadow-2xl"
-                    : "bg-gray-50 shadow-lg hover:shadow-2xl"
-                } p-8 transform hover:-translate-y-3`}
-              >
-                {/* Badge */}
-                {plan.highlighted && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-black text-yellow-400 px-4 py-1 rounded-full text-sm font-bold">
-                      Mais Escolhido
-                    </span>
-                  </div>
-                )}
-
-                {/* Plan Name */}
-                <h3
-                  className={`text-2xl font-bold mb-2 ${
-                    plan.highlighted ? "text-black" : "text-black"
-                  }`}
-                >
-                  {plan.name}
-                </h3>
-                <p
-                  className={`text-sm mb-6 ${
-                    plan.highlighted ? "text-black/70" : "text-gray-600"
-                  }`}
-                >
-                  {plan.description}
-                </p>
-
-                {/* Price */}
-                <div className="mb-8">
-                  <span
-                    className={`text-4xl font-bold ${
-                      plan.highlighted ? "text-black" : "text-yellow-500"
-                    }`}
-                  >
-                    {plan.price}
-                  </span>
-                  <span
-                    className={`text-sm ${
-                      plan.highlighted ? "text-black/70" : "text-gray-600"
-                    }`}
-                  >
-                    {plan.period}
+              {plan.highlighted && plan.badge && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <span className="inline-flex rounded-full border border-[#A3E635]/40 bg-[#A3E635] px-4 py-1 text-xs font-bold uppercase tracking-wide text-[#0E1012] shadow">
+                    {plan.badge}
                   </span>
                 </div>
+              )}
 
-                {/* Features */}
-                <ul className="space-y-4 mb-8">
-                  {plan.features.map((feature, featureIndex) => (
-                    <li
-                      key={featureIndex}
-                      className={`flex items-center gap-3 ${
-                        plan.highlighted ? "text-black" : "text-gray-700"
+              <div className="mb-6">
+                <h3 className="font-display text-2xl font-bold">{plan.name}</h3>
+                <p className={`mt-2 text-sm ${plan.highlighted ? "text-[#A1A1AA]" : "text-[#5B616E]"}`}>
+                  {plan.description}
+                </p>
+              </div>
+
+              <div className="mb-8">
+                <span className={`font-mono text-4xl font-bold tabular-nums ${plan.highlighted ? "text-[#A3E635]" : "text-[#0E1012]"}`}>
+                  {plan.price}
+                </span>
+                <span className={`ml-1 text-sm ${plan.highlighted ? "text-[#A1A1AA]" : "text-[#5B616E]"}`}>
+                  {plan.period}
+                </span>
+              </div>
+
+              <ul className="mb-8 flex-1 space-y-3">
+                {plan.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-3">
+                    <span
+                      className={`mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full ${
+                        plan.highlighted ? "bg-[#A3E635]/20 text-[#A3E635]" : "bg-[#A3E635]/15 text-[#4D7C0F]"
                       }`}
                     >
-                      <Check
-                        size={20}
-                        className={
-                          plan.highlighted ? "text-black" : "text-yellow-500"
-                        }
-                      />
-                      <span className="text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                      <Check size={13} strokeWidth={3} />
+                    </span>
+                    <span className={`text-sm ${plan.highlighted ? "text-[#E4E4E7]" : "text-[#3F4652]"}`}>
+                      {feature}
+                    </span>
+                  </li>
+                ))}
+              </ul>
 
-                {/* CTA Button */}
-                <a
-                  href="https://wa.me/5511999999999?text=Ola%20Academia%20Pro!%20Gostaria%20de%20contratar%20o%20plano%20"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`block w-full py-3 rounded-lg font-bold transition-all duration-300 text-center ${
-                    plan.highlighted
-                      ? "bg-black text-yellow-400 hover:bg-gray-900"
-                      : "bg-yellow-400 text-black hover:bg-yellow-500"
-                  }`}
-                >
-                  Contratar Agora
-                </a>
-              </div>
-            </div>
+              <button
+                type="button"
+                onClick={() => setSelectedPlan(plan)}
+                className={`w-full rounded-full px-6 py-3.5 font-bold transition-all duration-300 hover:-translate-y-0.5 ${
+                  plan.highlighted
+                    ? "bg-[#A3E635] text-[#0E1012] hover:bg-[#84CC16]"
+                    : "border border-[#D7D9D2] bg-[#F6F6F4] text-[#0E1012] hover:border-[#A3E635] hover:bg-white"
+                }`}
+              >
+                Contratar Agora
+              </button>
+            </article>
           ))}
         </div>
       </div>
+
+      <EnrollmentModal
+        plan={selectedPlan}
+        open={selectedPlan !== null}
+        onClose={() => setSelectedPlan(null)}
+      />
     </section>
   );
 }

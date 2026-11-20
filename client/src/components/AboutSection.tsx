@@ -1,5 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useRef, useState } from "react";
 import { Dumbbell, Users, Zap } from "lucide-react";
+import SafeImage from "@/components/SafeImage";
+import { aboutFeatures, aboutImage } from "@/data/academyData";
+
+const icons = {
+  dumbbell: Dumbbell,
+  users: Users,
+  zap: Zap,
+};
 
 export default function AboutSection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -8,121 +16,94 @@ export default function AboutSection() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        if (entry.isIntersecting) setIsVisible(true);
       },
-      { threshold: 0.1 }
+      { threshold: 0.15 }
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
-  const features = [
-    {
-      icon: Dumbbell,
-      title: "Equipamentos Modernos",
-      description: "Máquinas de última geração importadas e mantidas regularmente",
-    },
-    {
-      icon: Users,
-      title: "Personal Trainers",
-      description: "Profissionais certificados e especializados em diferentes áreas",
-    },
-    {
-      icon: Zap,
-      title: "Aulas Variadas",
-      description: "Musculação, funcional, cross, yoga e muito mais",
-    },
-  ];
-
   return (
     <section
-      id="about"
+      id="sobre"
       ref={sectionRef}
-      className="py-20 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden"
+      className="relative overflow-hidden bg-[#F6F6F4] py-24"
     >
-      {/* Background decoration */}
-      <div className="absolute top-20 left-0 w-96 h-96 bg-yellow-400 rounded-full opacity-5 blur-3xl" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-gray-900 rounded-full opacity-5 blur-3xl" />
-
+      <div className="absolute right-0 top-10 h-72 w-72 rounded-full bg-[#A3E635]/10 blur-3xl" />
       <div className="container relative z-10">
-        {/* Header */}
         <div
-          className={`text-center mb-16 transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          className={`mb-14 max-w-2xl transition-all duration-700 ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
           }`}
         >
-          <span className="text-yellow-500 font-bold text-sm uppercase tracking-wider">
-            Sobre Nós
+          <span className="text-sm font-bold uppercase tracking-[0.18em] text-[#65A30D]">
+            Sobre a Academia
           </span>
-          <h2 className="text-4xl lg:text-5xl font-bold text-black mt-2">
+          <h2 className="mt-3 font-display text-4xl font-extrabold text-[#0E1012] lg:text-5xl">
             Por que escolher a Academia Pro?
           </h2>
+          <p className="mt-4 text-lg text-[#5B616E]">
+            Uma experiência de treino completa, com estrutura, método e pessoas
+            que levam a sua evolução a sério.
+          </p>
         </div>
 
-        {/* Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left Image */}
+        <div className="grid items-center gap-12 lg:grid-cols-2">
           <div
             className={`transition-all duration-700 delay-100 ${
-              isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
+              isVisible ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"
             }`}
           >
-            <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663241647868/nKoDBegxXWcUWFrCoQrWiu/gym-facility-modern-C39NtXws7iMq6pmPebguCr.webp"
-              alt="Instalacoes Academia Pro"
-              className="w-full h-auto rounded-2xl shadow-2xl object-cover"
-              style={{
-                clipPath: "polygon(0 0, 100% 8%, 100% 100%, 0 92%)",
-              }}
-            />
+            <div className="relative">
+              <div className="absolute -left-4 -top-4 h-full w-full rounded-[1.75rem] border border-[#E4E4E0] bg-white" />
+              <div className="relative overflow-hidden rounded-[1.75rem] border border-[#E4E4E0] shadow-xl">
+                <SafeImage
+                  src={aboutImage}
+                  alt="Instalações modernas da Academia Pro"
+                  fallbackLabel="Instalações da Academia Pro"
+                  className="h-[420px] w-full object-cover"
+                />
+              </div>
+            </div>
           </div>
 
-          {/* Right Content */}
           <div
             className={`transition-all duration-700 delay-200 ${
-              isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+              isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"
             }`}
           >
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-bold text-black mb-3">
-                  Transformacao com Proposito
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Ha 12 anos ajudando pessoas a alcançarem seus objetivos. Nossa missao eh
-                  proporcionar um ambiente acolhedor, profissional e motivador onde cada
-                  aluno possa se transformar.
-                </p>
-              </div>
+            <div className="rounded-3xl border border-[#E4E4E0] bg-white p-8 shadow-sm lg:p-10">
+              <h3 className="font-display text-2xl font-bold text-[#0E1012]">
+                Transformação com Propósito
+              </h3>
+              <p className="mt-4 leading-relaxed text-[#5B616E]">
+                Há mais de 12 anos, nossa missão é oferecer um ambiente
+                profissional, acolhedor e motivador, onde cada aluno encontra o
+                suporte necessário para alcançar resultados reais e duradouros.
+              </p>
 
-              {/* Features */}
-              <div className="space-y-4">
-                {features.map((feature, index) => {
-                  const Icon = feature.icon;
+              <div className="mt-8 space-y-5">
+                {aboutFeatures.map((feature, index) => {
+                  const Icon = icons[feature.icon];
                   return (
                     <div
-                      key={index}
+                      key={feature.title}
                       className={`flex gap-4 transition-all duration-500 ${
-                        isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-5"
+                        isVisible ? "translate-x-0 opacity-100" : "-translate-x-4 opacity-0"
                       }`}
-                      style={{
-                        transitionDelay: `${300 + index * 100}ms`,
-                      }}
+                      style={{ transitionDelay: `${300 + index * 100}ms` }}
                     >
-                      <div className="flex-shrink-0">
-                        <div className="w-12 h-12 bg-yellow-400 rounded-lg flex items-center justify-center">
-                          <Icon size={24} className="text-black" />
-                        </div>
+                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-[#A3E635]/15 text-[#4D7C0F]">
+                        <Icon size={22} />
                       </div>
                       <div>
-                        <h4 className="font-bold text-black mb-1">{feature.title}</h4>
-                        <p className="text-sm text-gray-600">{feature.description}</p>
+                        <h4 className="font-display text-lg font-semibold text-[#0E1012]">
+                          {feature.title}
+                        </h4>
+                        <p className="mt-1 text-sm leading-relaxed text-[#5B616E]">
+                          {feature.description}
+                        </p>
                       </div>
                     </div>
                   );

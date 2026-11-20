@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { Mail, CheckCircle } from "lucide-react";
+﻿import { useEffect, useRef, useState } from "react";
+import { CheckCircle, Mail } from "lucide-react";
 
 export default function NewsletterSection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -12,64 +12,45 @@ export default function NewsletterSection() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        if (entry.isIntersecting) setIsVisible(true);
       },
-      { threshold: 0.1 }
+      { threshold: 0.15 }
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
-  const validateEmail = (email: string) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
+  const validateEmail = (value: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     setError("");
 
     if (!email.trim()) {
-      setError("Por favor, insira seu email");
+      setError("Por favor, insira seu e-mail.");
       return;
     }
-
     if (!validateEmail(email)) {
-      setError("Email invalido. Por favor, tente novamente");
+      setError("E-mail inválido. Verifique e tente novamente.");
       return;
     }
 
     setIsLoading(true);
-
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      const storedEmails = localStorage.getItem("newsletterEmails");
-      const emails = storedEmails ? JSON.parse(storedEmails) : [];
-
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      const stored = localStorage.getItem("newsletterEmails");
+      const emails: string[] = stored ? (JSON.parse(stored) as string[]) : [];
       if (emails.includes(email)) {
-        setError("Este email ja esta inscrito");
-        setIsLoading(false);
+        setError("Este e-mail já está inscrito.");
         return;
       }
-
       emails.push(email);
       localStorage.setItem("newsletterEmails", JSON.stringify(emails));
-
       setIsSubmitted(true);
       setEmail("");
-
-      setTimeout(() => {
-        setIsSubmitted(false);
-      }, 5000);
-    } catch (err) {
-      setError("Erro ao inscrever. Tente novamente");
+      setTimeout(() => setIsSubmitted(false), 5000);
+    } catch {
+      setError("Não foi possível concluir a inscrição. Tente novamente.");
     } finally {
       setIsLoading(false);
     }
@@ -79,107 +60,84 @@ export default function NewsletterSection() {
     <section
       id="newsletter"
       ref={sectionRef}
-      className="py-20 bg-gradient-to-r from-black to-gray-900 relative overflow-hidden"
+      className="relative overflow-hidden bg-[#0E1012] py-24 text-[#F8FAFC]"
     >
-      {/* Background decoration */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-yellow-400 rounded-full opacity-10 blur-3xl" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-400 rounded-full opacity-5 blur-3xl" />
-
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(163,230,53,0.15),transparent_35%)]" />
       <div className="container relative z-10">
-        <div className="max-w-3xl mx-auto">
-          {/* Header */}
+        <div className="mx-auto max-w-3xl">
           <div
-            className={`text-center mb-12 transition-all duration-700 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            className={`text-center transition-all duration-700 ${
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
             }`}
           >
-            <div className="inline-block mb-4">
-              <div className="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center">
-                <Mail size={32} className="text-black" />
-              </div>
+            <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#A3E635]/15 text-[#A3E635]">
+              <Mail size={26} />
             </div>
-            <h2 className="text-4xl lg:text-5xl font-bold text-white mt-4">
-              Receba dicas exclusivas
+            <span className="text-sm font-bold uppercase tracking-[0.18em] text-[#A3E635]">
+              Comunidade Academia Pro
+            </span>
+            <h2 className="mt-3 font-display text-4xl font-extrabold text-white lg:text-5xl">
+              Receba dicas e novidades
             </h2>
-            <p className="text-gray-300 mt-4 text-lg">
-              Inscreva-se em nossa newsletter e receba dicas de treino, nutricao e
-              motivacao direto no seu email. Alem disso, ganhe um desconto especial
-              para sua primeira aula!
+            <p className="mt-4 text-lg text-[#A1A1AA]">
+              Conteúdos sobre treino, performance e bem-estar, além de condições especiais para alunos e novos membros.
             </p>
           </div>
 
-          {/* Form */}
           <div
-            className={`transition-all duration-700 delay-200 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            className={`mt-10 transition-all duration-700 delay-150 ${
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
             }`}
           >
             {isSubmitted ? (
-              <div className="bg-green-500/20 border-2 border-green-500 rounded-2xl p-8 text-center animate-scaleIn">
-                <div className="flex justify-center mb-4">
-                  <CheckCircle size={48} className="text-green-500" />
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-2">
-                  Inscricao realizada com sucesso!
+              <div className="rounded-3xl border border-[#A3E635]/30 bg-[#A3E635]/10 p-8 text-center animate-scaleIn">
+                <CheckCircle size={44} className="mx-auto text-[#A3E635]" />
+                <h3 className="mt-4 font-display text-2xl font-bold text-white">
+                  Inscrição realizada com sucesso!
                 </h3>
-                <p className="text-gray-300">
-                  Verifique seu email para confirmar a inscricao e receber seu desconto
-                  especial de 10% na primeira aula.
+                <p className="mt-2 text-[#D4D4D8]">
+                  Em breve você receberá nossos conteúdos e novidades no seu e-mail.
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="flex flex-col sm:flex-row gap-4">
+              <form onSubmit={handleSubmit} className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm sm:p-8">
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <label htmlFor="newsletter-email" className="sr-only">
+                    Seu e-mail
+                  </label>
                   <input
+                    id="newsletter-email"
                     type="email"
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
                       setError("");
                     }}
-                    placeholder="Seu melhor email"
-                    className="flex-1 px-6 py-4 rounded-lg bg-white/10 border-2 border-white/20 text-white placeholder-gray-400 focus:border-yellow-400 focus:outline-none transition-all duration-300"
+                    placeholder="Seu melhor e-mail"
+                    className="flex-1 rounded-full border border-white/15 bg-[#171A1F] px-5 py-3.5 text-white placeholder:text-[#71717A] focus:border-[#A3E635] focus:outline-none focus:ring-2 focus:ring-[#A3E635]/30"
                     disabled={isLoading}
+                    autoComplete="email"
                   />
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="px-8 py-4 bg-yellow-400 text-black font-bold rounded-lg hover:bg-yellow-500 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                    className="rounded-full bg-[#A3E635] px-7 py-3.5 font-bold text-[#0E1012] transition-all hover:bg-[#84CC16] disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {isLoading ? "Inscrevendo..." : "Inscrever-se"}
                   </button>
                 </div>
-
-                {/* Error Message */}
-                {error && (
-                  <div className="text-red-400 text-sm font-medium animate-fadeInUp">
-                    {error}
-                  </div>
-                )}
-
-                {/* Benefits */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
-                  <div className="flex items-center gap-2 text-gray-300 text-sm">
-                    <span className="w-2 h-2 bg-yellow-400 rounded-full" />
-                    Dicas semanais
-                  </div>
-                  <div className="flex items-center gap-2 text-gray-300 text-sm">
-                    <span className="w-2 h-2 bg-yellow-400 rounded-full" />
-                    Promocoes exclusivas
-                  </div>
-                  <div className="flex items-center gap-2 text-gray-300 text-sm">
-                    <span className="w-2 h-2 bg-yellow-400 rounded-full" />
-                    Sem spam
-                  </div>
+                {error && <p className="mt-3 text-sm font-medium text-red-400 animate-fadeInUp">{error}</p>}
+                <div className="mt-5 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-[#A1A1AA]">
+                  <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#A3E635]" />Dicas de treino</span>
+                  <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#A3E635]" />Novidades e ofertas</span>
+                  <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#A3E635]" />Sem spam</span>
                 </div>
               </form>
             )}
+            <p className="mt-6 text-center text-xs text-[#71717A]">
+              Respeitamos sua privacidade. Você pode cancelar a inscrição quando quiser.
+            </p>
           </div>
-
-          {/* Privacy Notice */}
-          <p className="text-center text-gray-400 text-xs mt-8">
-            Respeitamos sua privacidade. Desinscreva-se a qualquer momento.
-          </p>
         </div>
       </div>
     </section>
